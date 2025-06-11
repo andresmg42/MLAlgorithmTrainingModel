@@ -352,7 +352,7 @@ if __name__=='__main__':
  
     results=rolling.train_pipeline()
 
-    print(results.isna().sum().sum())
+    print(results)
 
     
     

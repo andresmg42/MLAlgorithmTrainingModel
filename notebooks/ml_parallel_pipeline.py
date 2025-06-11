@@ -438,19 +438,19 @@ class RollingOLSRegressionParallel:
 
     
 
-    def train_parallel_pipeline(self):
+    def train_parallel_pipeline(self,batch_size=10):
 
-        data=self.load_data_p(10)
+        data=self.load_data_p(batch_size)
 
-        df_indicators=self.calculate_tecnical_indicators_p(data,10)
+        df_indicators=self.calculate_tecnical_indicators_p(data,batch_size)
         
         df_aggregate=self.aggregate_to_monthly_level(df_indicators)
         
-        df_monthly_returns=self.calculate_monthly_returns_p(df_aggregate,10)
+        df_monthly_returns=self.calculate_monthly_returns_p(df_aggregate,batch_size)
         
         df_factor_data=self.download_fama_french_F(df_monthly_returns)
         
-        df_betas=self.calculate_rolling_f_betas_P(df_factor_data,10)
+        df_betas=self.calculate_rolling_f_betas_P(df_factor_data,batch_size)
         
         df_join_data=self.join_r_factors_to_main_features(df_monthly_returns,df_betas)
         
@@ -458,7 +458,7 @@ class RollingOLSRegressionParallel:
         
         df_fixed_dates=self.portfolio_based_on_cluster(df_clusters)
         
-        df_new_df=self.download_fresh_daily_prices_p(df_clusters,10)
+        df_new_df=self.download_fresh_daily_prices_p(df_clusters,batch_size)
         
         df_returns=self.calculate_return_for_date_p(df_new_df,df_fixed_dates)
 
@@ -472,6 +472,7 @@ if __name__=='__main__':
     
     parser=argparse.ArgumentParser(description='Process some arguments.')
     parser.add_argument('--index','-i',type=str,required=True, help='available stock index (s&p500,downjones)')
+    parser.add_argument('--batch_size','-b',type=int,required=True, help='batch size to parallelize')
     parser.add_argument('--start_date','-s',type=str,required=True, help='start date to train')
     parser.add_argument('--end_date','-e',type=str,required=True, help='end date to train')
     
@@ -481,7 +482,7 @@ if __name__=='__main__':
 
     rolling=RollingOLSRegressionParallel(symbols_list,args.start_date,args.end_date)
 
-    results=rolling.train_parallel_pipeline()
+    results=rolling.train_parallel_pipeline(args.batch_size)
 
     print(results)
  
