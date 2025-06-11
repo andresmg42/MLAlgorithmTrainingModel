@@ -1,5 +1,5 @@
 FROM jupyter/datascience-notebook:latest
 
-RUN pip install ray yfinance pandas_ta PyPortfolioOpt PyPortfolioOpt ray pandas_datareader
+RUN pip install ray yfinance pandas_ta PyPortfolioOpt  ray pandas_datareader "fastapi[standard]" "ray[data,train,tune,serve]"
 
 CMD bash -c "ray start --head --port=6379 --dashboard-host=0.0.0.0 --dashboard-port=8265 && start-notebook.sh"
