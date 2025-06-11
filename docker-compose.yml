@@ -1,0 +1,16 @@
+
+services:
+  ray_jupyter:
+    build: .                        # Build from the Dockerfile in the same folder
+    container_name: ray_jupyter
+    shm_size: "0.99gb"
+    environment:
+    - RAY_memory_usage_threshold=0.99
+    - JUPYTER_ENABLE_LAB=yes
+    - JUPYTER_TOKEN=
+    volumes:
+      - ./notebooks:/home/jovyan/work
+    ports:
+      - "8888:8888"                # Jupyter Notebook
+      - "8265:8265"                # Ray Dashboard
+      - "6379:6379"                # Ray head node port
