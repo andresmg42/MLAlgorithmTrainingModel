@@ -1,0 +1,16 @@
+numpy==1.26.4
+statsmodels
+pandas-datareader==0.10.0
+pandas
+datetime
+yfinance
+yfinance==0.2.62
+pandas-ta==0.3.14b0
+warnings
+scikit-learn
+ray==2.47.0
+pyportfolioopt==1.5.6
+argparse
+requests
+"fastapi[standard]" 
+"ray[data,train,tune,serve]"

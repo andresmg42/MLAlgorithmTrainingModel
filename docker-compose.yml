@@ -14,3 +14,4 @@ services:
       - "8888:8888"                # Jupyter Notebook
       - "8265:8265"                # Ray Dashboard
       - "6379:6379"                # Ray head node port
+      - "8000:8000"                
